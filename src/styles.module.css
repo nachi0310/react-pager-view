@@ -16,6 +16,9 @@
   font-size: 12px;
   padding-bottom: 5px;
 }
+.tabContent {
+  height: 100vh;
+}
 .selected { 
   border-bottom: 2px solid black;
 }

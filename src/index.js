@@ -3,17 +3,60 @@ import styles from './styles.module.css'
 
 export const SwiperTabComponent = (props) => {
   console.log("styles", styles);
+  let touchstartX = 0;
+  let touchstartY = 0;
+  let touchendX = 0;
+  let touchendY = 0;
   let tabContentRef = useRef(null);
   let position = props.position ? props.position : 'top';
   let className = 'topTabs';
-  if(position === 'top') {
-    className = 'topTabs';
-  } else if(position === 'bottom') {
+  if(position === 'bottom') {
     className = 'bottomTabs';
-  } else {
-    className = 'topTabs';
   }
   let selectedTab = 0;
+
+  const handleGesture = (touchstartX, touchstartY, touchendX, touchendY) => {
+    const distx = touchendX - touchstartX;
+    const disty = touchendY - touchstartY;
+    let currentTab = localStorage.getItem('tabIndex');
+    let tabContent = tabContentRef.current?.children;
+    let tabs = document.querySelectorAll('.' + styles.tab);
+
+    //left -> increament slide
+    //right -> decreament slide
+    if(tabContent) {
+      tabContent = Array.from(tabContent);
+    }
+    if(Math.abs(distx) > Math.abs(disty)){
+      if(distx > 0) {
+        if(Number(currentTab) !== 0 ) {
+          tabContent.forEach((content, i) => {
+            if((Number(currentTab) - 1) === i) {
+              Array.from(tabs)[i].className = styles.tab + " " + styles.selected;
+              content.className = styles.showContent;
+              localStorage.setItem('tabIndex', i);
+            } else {
+              content.className = styles.hideContent;
+              Array.from(tabs)[i].className = styles.tab;
+            }
+          })
+        }
+      } else {
+        if(Number(currentTab) < (tabContent.length - 1)) {
+          tabContent.forEach((content, i) => {
+            if((Number(currentTab) + 1) === i) {
+              Array.from(tabs)[i].className = styles.tab + " " + styles.selected;
+              content.className = styles.showContent;
+              localStorage.setItem('tabIndex', i);
+            } else {
+              content.className = styles.hideContent;
+              Array.from(tabs)[i].className = styles.tab;
+            }
+          })
+        }
+      }  
+    }
+  }
 
   useEffect(() => {
     let tabs = document.querySelectorAll('.' + styles.tab);
@@ -44,6 +87,18 @@ export const SwiperTabComponent = (props) => {
         }
       })
     }
+    //listening to scroll events
+    document.querySelector('.' + styles.tabContent).addEventListener('touchstart', (event) => {
+      touchstartX = event.changedTouches[0].screenX;
+      touchstartY = event.changedTouches[0].screenY;
+    }, false);
+
+    document.querySelector('.' + styles.tabContent).addEventListener('touchend',(event) => {
+      touchendX = event.changedTouches[0].screenX;
+      touchendY = event.changedTouches[0].screenY;
+      handleGesture(touchstartX, touchstartY, touchendX, touchendY)
+    }, false); 
+
   })
 
 
@@ -93,7 +148,7 @@ export const SwiperTabComponent = (props) => {
           {listItems}
         </div>
       }  
-      <div class="tabContent" ref={tabContentRef}> 
+      <div className={styles.tabContent} ref={tabContentRef}> 
         {props.children}
       </div>
     </div>
