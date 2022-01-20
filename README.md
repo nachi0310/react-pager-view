@@ -7,8 +7,8 @@
 <!-- ## Install
 
 ```bash
-npm install --save viewpager -->
-```
+npm install --save viewpager
+``` -->
 
 ## Usage
 
