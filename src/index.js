@@ -2,7 +2,6 @@ import React, {useRef, useEffect} from 'react'
 import styles from './styles.module.css'
 
 export const SwiperTabComponent = (props) => {
-  console.log("styles", styles);
   let touchstartX = 0;
   let touchstartY = 0;
   let touchendX = 0;
