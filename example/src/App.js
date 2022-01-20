@@ -25,7 +25,7 @@ const App = () => {
     }
   ]
   return (
-    <SwiperTabComponent position={'top'} tabs={tabs} text="Create React Library Example 😄">
+    <SwiperTabComponent position={'top'} tabs={tabs}>
       <div>
         This is first child.
       </div>

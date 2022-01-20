@@ -2,12 +2,12 @@
 
 > Pager view and tab view  built in react 
 
-[![NPM](https://img.shields.io/npm/v/viewpager.svg)](https://www.npmjs.com/package/viewpager) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+<!-- [![NPM](https://img.shields.io/npm/v/viewpager.svg)](https://www.npmjs.com/package/viewpager) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) -->
 
-## Install
+<!-- ## Install
 
 ```bash
-npm install --save viewpager
+npm install --save viewpager -->
 ```
 
 ## Usage
@@ -15,12 +15,37 @@ npm install --save viewpager
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'viewpager'
+import SwiperTabComponent from 'viewpager'
 import 'viewpager/dist/index.css'
 
+
+
 class Example extends Component {
+  let tabs = [
+    {
+      'name': 'First',
+    },
+    {
+      'name': 'Second',
+    },
+    {
+      'name': 'Third',
+    }
+  ]
   render() {
-    return <MyComponent />
+    return (
+      <SwiperTabComponent position={'top'} tabs={tabs}>
+        <div>
+          This is first child.
+        </div>
+        <div>
+          This is second child.
+        </div>
+        <div>
+          This is third child.
+        </div>
+      </SwiperTabComponent>
+    )
   }
 }
 ```
